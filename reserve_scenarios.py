@@ -30,5 +30,5 @@ df = df.sort_values(by = df.columns[-1])
 
 res_corridor = df[lower_bound:upper_bound]
 
-print(res_corridor)
-#res_corridor.to_excel('reserve_scenarios.xlsx', index = False)
+#print(res_corridor)
+res_corridor.to_excel('reserve_scenarios.xlsx', index = False)

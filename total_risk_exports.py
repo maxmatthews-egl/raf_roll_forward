@@ -35,7 +35,6 @@ df["Total SCR"] = (
     + df["Total Market Risk"]
     + df["Total Operational Risk"])
 
-print(df.head(10))
 
 #DF Can now be exported for plotting in AllRisk
 
@@ -69,7 +68,7 @@ col_order = [ "Total Insurance Risk",
 loss_table = loss_table.reindex(columns=col_order)
 loss_table = loss_table.T
 
-print(loss_table)
+#print(loss_table)
 
 #Finding Insurance and RI Credit risk Buffer
 ins_and_credit = df['Total Credit Risk'] + df['Total Insurance Risk']
@@ -78,9 +77,9 @@ ins_and_credit = pd.DataFrame({'Insurance and Credit Risk Buffer': [ins_and_cred
 
 
 #Write to excel
-#loss_table.to_excel('Outputs/total_risk_table.xlsx', index = False)
-#corridor.to_excel('Outputs/simulation_corridor_data.xlsx', index = False)
-#ins_and_credit.to_excel('Outputs/insurance_risk_buffer.xlsx', index = False)
+loss_table.to_excel('Outputs/total_risk_table.xlsx', index = False)
+corridor.to_excel('Outputs/simulation_corridor_data.xlsx', index = False)
+ins_and_credit.to_excel('Outputs/insurance_risk_buffer.xlsx', index = False)
 
 
 ##ALTERNATE EXPORT OPTION
