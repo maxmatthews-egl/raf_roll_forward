@@ -14,6 +14,14 @@ net_reserves_scale  = 0.94444485445209
 return_periods = [2,5,10,20,50,100,200,500]
 percentiles = [1/rp for rp in return_periods]
 
+#Order for columns to be displayed
+col_order = [ "Total Insurance Risk",
+    "Total Market Risk",
+    "Total Credit Risk",
+    "Total Operational Risk",
+    "Total SCR"
+]
+
 df = pd.read_csv(total_risk_path)
 
 #Removing non egl_group fields
@@ -43,7 +51,9 @@ tot_sims = len(df)
 lower_bound = int(tot_sims*0.05 - num_sims//2 - 1)
 upper_bound = int(tot_sims*0.05 + num_sims//2)
 
-corridor = df[lower_bound:upper_bound]
+corridor = df.sort_values(by = df.columns[-1])
+corridor = corridor.reindex(columns=col_order)
+corridor = corridor[lower_bound:upper_bound]
 
 #Taking percentiles and ajusting cols
 loss_table = df.drop(columns=['Risk','Sim'], errors = 'ignore')
@@ -58,12 +68,7 @@ headers = [f'1 in {rp} Year' for rp in return_periods]
 
 #Insert return periods, reorder and transpose
 loss_table.insert(0, 'Return Period', headers)
-col_order = [ "Total Insurance Risk",
-    "Total Market Risk",
-    "Total Credit Risk",
-    "Total Operational Risk",
-    "Total SCR"
-]
+
 
 loss_table = loss_table.reindex(columns=col_order)
 loss_table = loss_table.T
